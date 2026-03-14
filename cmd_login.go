@@ -15,7 +15,7 @@ import (
 const (
 	defaultCallbackPort = 9876
 	loginTimeout        = 5 * time.Minute
-	defaultAPIURL       = "https://app.qamax.co"
+	defaultAPIURL       = "https://app.qualitymax.io"
 )
 
 func cmdLogin(args []string) {

@@ -27,7 +27,7 @@ func TestSaveAndLoadConfig(t *testing.T) {
 
 	original := &Config{
 		Token:              "test-token-123",
-		APIURL:             "https://app.qamax.co",
+		APIURL:             "https://app.qualitymax.io",
 		AgentID:            "agent-uuid",
 		APIKey:             "hex-api-key",
 		RegistrationSecret: "secret",
@@ -113,10 +113,10 @@ func TestGetAPIBaseURL(t *testing.T) {
 		input string
 		want  string
 	}{
-		{"https://app.qamax.co", "https://app.qamax.co"},
-		{"https://app.qamax.co/", "https://app.qamax.co"},
-		{"https://app.qamax.co/app", "https://app.qamax.co"},
-		{"https://app.qamax.co/app/", "https://app.qamax.co"},
+		{"https://app.qualitymax.io", "https://app.qualitymax.io"},
+		{"https://app.qualitymax.io/", "https://app.qualitymax.io"},
+		{"https://app.qualitymax.io/app", "https://app.qualitymax.io"},
+		{"https://app.qualitymax.io/app/", "https://app.qualitymax.io"},
 		{"", ""},
 	}
 

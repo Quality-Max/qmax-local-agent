@@ -47,7 +47,7 @@ func TestLoginCallbackHandler(t *testing.T) {
 	}
 
 	// Verify saving token to config works
-	cfg := &Config{Token: token, APIURL: "https://app.qamax.co"}
+	cfg := &Config{Token: token, APIURL: "https://app.qualitymax.io"}
 	if err := cfg.Save(); err != nil {
 		t.Fatalf("Save failed: %v", err)
 	}
@@ -92,7 +92,7 @@ func TestLoginSavesConfigFile(t *testing.T) {
 
 	cfg := &Config{
 		Token:  "saved-token",
-		APIURL: "https://app.qamax.co",
+		APIURL: "https://app.qualitymax.io",
 	}
 	if err := cfg.Save(); err != nil {
 		t.Fatalf("Save failed: %v", err)

@@ -26,7 +26,7 @@ func cmdRun(args []string) {
 	defaultAPIKey := cfg.APIKey
 	defaultSecret := cfg.RegistrationSecret
 
-	cloudURL := fs.String("cloud-url", defaultURL, "QualityMax cloud URL (e.g., https://app.qamax.co)")
+	cloudURL := fs.String("cloud-url", defaultURL, "QualityMax cloud URL (e.g., https://app.qualitymax.io)")
 	apiKey := fs.String("api-key", defaultAPIKey, "Agent API key (optional, will be generated on first registration)")
 	agentID := fs.String("agent-id", defaultAgentID, "Agent ID (optional, will be generated on first registration)")
 	registrationSecret := fs.String("registration-secret", defaultSecret, "Registration secret (must match AGENT_REGISTRATION_SECRET on server)")
