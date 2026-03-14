@@ -18,7 +18,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Quality-Max/qamax-local-agent/sysmetrics"
+	"github.com/Quality-Max/qmax-local-agent/sysmetrics"
 )
 
 const (

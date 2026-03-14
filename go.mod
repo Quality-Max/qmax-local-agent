@@ -1,4 +1,4 @@
-module github.com/Quality-Max/qamax-local-agent
+module github.com/Quality-Max/qmax-local-agent
 
 go 1.23
 

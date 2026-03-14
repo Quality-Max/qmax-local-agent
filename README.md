@@ -15,7 +15,7 @@ Single binary, no runtime dependencies (Node.js/npm required only for test execu
 ### One-liner (recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Quality-Max/qamax-local-agent/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Quality-Max/qmax-local-agent/main/install.sh | bash
 ```
 
 This detects your OS and architecture, downloads the correct binary from GitHub Releases, and installs it to `~/.qmax/`.
@@ -23,22 +23,22 @@ This detects your OS and architecture, downloads the correct binary from GitHub 
 To install a specific version:
 
 ```bash
-QMAX_VERSION=v3.0.0 curl -fsSL https://raw.githubusercontent.com/Quality-Max/qamax-local-agent/main/install.sh | bash
+QMAX_VERSION=v3.0.0 curl -fsSL https://raw.githubusercontent.com/Quality-Max/qmax-local-agent/main/install.sh | bash
 ```
 
 ### Download binary manually
 
-Download the latest release for your platform from [Releases](https://github.com/Quality-Max/qamax-local-agent/releases/latest):
+Download the latest release for your platform from [Releases](https://github.com/Quality-Max/qmax-local-agent/releases/latest):
 
 ```bash
 # macOS Apple Silicon
-curl -fsSL -o qmax https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qmax-darwin-arm64
+curl -fsSL -o qmax https://github.com/Quality-Max/qmax-local-agent/releases/latest/download/qmax-darwin-arm64
 
 # macOS Intel
-curl -fsSL -o qmax https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qmax-darwin-amd64
+curl -fsSL -o qmax https://github.com/Quality-Max/qmax-local-agent/releases/latest/download/qmax-darwin-amd64
 
 # Linux x86_64
-curl -fsSL -o qmax https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qmax-linux-amd64
+curl -fsSL -o qmax https://github.com/Quality-Max/qmax-local-agent/releases/latest/download/qmax-linux-amd64
 
 chmod +x qmax
 sudo mv qmax /usr/local/bin/
@@ -49,8 +49,8 @@ sudo mv qmax /usr/local/bin/
 Requires Go 1.23+:
 
 ```bash
-git clone https://github.com/Quality-Max/qamax-local-agent.git
-cd qamax-local-agent
+git clone https://github.com/Quality-Max/qmax-local-agent.git
+cd qmax-local-agent
 make build
 ```
 

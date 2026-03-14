@@ -4,7 +4,7 @@
 
 set -e
 
-REPO="Quality-Max/qamax-local-agent"
+REPO="Quality-Max/qmax-local-agent"
 
 echo "QualityMax Local Agent Installer"
 echo "================================"

@@ -849,24 +849,10 @@ func TestHeartbeatLoop_CancelStops(t *testing.T) {
 	a.HeartbeatInterval = 50 * time.Millisecond
 	a.running = true
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
 
-	done := make(chan struct{})
-	go func() {
-		a.heartbeatLoop(ctx)
-		close(done)
-	}()
-
-	// Wait for at least one heartbeat
-	time.Sleep(500 * time.Millisecond)
-	cancel()
-
-	select {
-	case <-done:
-		// good
-	case <-time.After(5 * time.Second):
-		t.Fatal("heartbeatLoop should stop after context cancellation")
-	}
+	a.heartbeatLoop(ctx)
 
 	count := atomic.LoadInt32(&heartbeats)
 	if count < 1 {
