@@ -1,3 +1,5 @@
 qamax-agent
 qamax-agent-*
 build/
+*.out
+cover.html

@@ -350,6 +350,14 @@ func (a *Agent) PollAssignments() ([]Assignment, error) {
 // ExecuteTest runs a single test assignment.
 func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 	assignmentID := fmt.Sprintf("%v", assignment.ID)
+
+	// Always clean up active test tracking, even on early returns
+	defer func() {
+		a.activeTests.Delete(assignmentID)
+		a.mu.Lock()
+		a.activeCount--
+		a.mu.Unlock()
+	}()
 	scriptID := fmt.Sprintf("%v", assignment.ScriptID)
 	testCode := assignment.Code
 	browser := assignment.Browser
@@ -392,12 +400,6 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 		return
 	}
 	defer os.RemoveAll(testDir)
-	defer func() {
-		a.activeTests.Delete(assignmentID)
-		a.mu.Lock()
-		a.activeCount--
-		a.mu.Unlock()
-	}()
 
 	a.updateAssignmentStatus(assignmentID, "started")
 
@@ -579,7 +581,7 @@ func (a *Agent) collectArtifacts(testDir string) map[string]interface{} {
 
 	var screenshots []map[string]string
 
-	filepath.Walk(testResults, func(path string, info os.FileInfo, err error) error {
+	_ = filepath.Walk(testResults, func(path string, info os.FileInfo, err error) error {
 		if err != nil || info.IsDir() {
 			return nil
 		}
@@ -734,6 +736,14 @@ func (a *Agent) Run(ctx context.Context) error {
 				a.mu.Unlock()
 
 				go a.ExecuteTest(ctx, assignment)
+			}
+
+			// Poll for crawl sessions
+			crawlSession, crawlErr := a.PollCrawlSessions()
+			if crawlErr != nil {
+				log.Printf("WARN: polling crawl sessions: %v", crawlErr)
+			} else if crawlSession != nil {
+				go a.ExecuteCrawlSession(ctx, *crawlSession)
 			}
 		}
 	}

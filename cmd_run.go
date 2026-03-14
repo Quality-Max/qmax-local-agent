@@ -32,7 +32,7 @@ func cmdRun(args []string) {
 	registrationSecret := fs.String("registration-secret", defaultSecret, "Registration secret (must match AGENT_REGISTRATION_SECRET on server)")
 	pollInterval := fs.Int("poll-interval", 5, "Polling interval in seconds")
 	heartbeatInterval := fs.Int("heartbeat-interval", 60, "Heartbeat interval in seconds")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *cloudURL == "" {
 		fmt.Fprintln(os.Stderr, "Error: --cloud-url is required (set via flag or `qamax-agent login`)")

@@ -134,8 +134,8 @@ func TestLoadConfig_InvalidJSON(t *testing.T) {
 	t.Setenv("HOME", tmp)
 
 	dir := filepath.Join(tmp, ".qamax")
-	os.MkdirAll(dir, 0700)
-	os.WriteFile(filepath.Join(dir, "config.json"), []byte("not json"), 0600)
+	_ = os.MkdirAll(dir, 0700)
+	_ = os.WriteFile(filepath.Join(dir, "config.json"), []byte("not json"), 0600)
 
 	_, err := LoadConfig()
 	if err == nil {

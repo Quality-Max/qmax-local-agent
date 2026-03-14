@@ -12,7 +12,7 @@ import (
 
 func cmdProjects(args []string) {
 	fs := flag.NewFlagSet("projects", flag.ExitOnError)
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	cfg, err := LoadConfig()
 	if err != nil || cfg.Token == "" {

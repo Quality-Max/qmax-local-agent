@@ -23,7 +23,7 @@ func cmdCapture(args []string) {
 	name := fs.String("name", "", "Name for the auth data field (required)")
 	output := fs.String("output", "", "Optional file path to write storage state JSON")
 	urlFlag := fs.String("url", "", "Target URL to capture cookies from")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	// URL can be positional (last arg) or via --url flag
 	targetURL := *urlFlag
@@ -99,7 +99,7 @@ func cmdCapture(args []string) {
 		fmt.Fprintf(os.Stderr, "WARN: could not navigate back: %v\n", err)
 	}
 	// Brief wait for cookies to settle after navigation
-	chromedp.Run(ctx, chromedp.Sleep(2*time.Second))
+	_ = chromedp.Run(ctx, chromedp.Sleep(2*time.Second))
 
 	// Capture ALL browser cookies (including HTTP-Only from all domains visited)
 	fmt.Println("Capturing cookies...")
@@ -130,7 +130,7 @@ func cmdCapture(args []string) {
 
 	// Parse localStorage entries
 	var localStorageEntries []map[string]string
-	json.Unmarshal([]byte(localStorageJSON), &localStorageEntries)
+	_ = json.Unmarshal([]byte(localStorageJSON), &localStorageEntries)
 	if len(localStorageEntries) > 0 {
 		fmt.Printf("Captured %d localStorage entries\n", len(localStorageEntries))
 	}
