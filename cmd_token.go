@@ -12,7 +12,7 @@ func cmdToken(args []string) {
 
 	cfg, err := LoadConfig()
 	if err != nil || cfg.Token == "" {
-		fmt.Fprintln(os.Stderr, "Error: not logged in. Run `qamax-agent login` first.")
+		fmt.Fprintln(os.Stderr, "Error: not logged in. Run `qmax login` first.")
 		os.Exit(1)
 	}
 

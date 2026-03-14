@@ -2,7 +2,7 @@
 
 ## Overview
 
-The QualityMax Local Agent (`qamax-agent`) is a single binary CLI that:
+The QualityMax Local Agent (`qmax`) is a single binary CLI that:
 - Runs as a daemon to poll and execute Playwright tests from QualityMax cloud
 - Authenticates via browser-based OAuth login
 - Captures browser cookies for authenticated test scenarios
@@ -25,12 +25,12 @@ The QualityMax Local Agent (`qamax-agent`) is a single binary CLI that:
 
 2. **Log in:**
    ```bash
-   qamax-agent login
+   qmax login
    ```
 
 3. **Start the agent:**
    ```bash
-   qamax-agent run --cloud-url https://app.qualitymax.io --registration-secret YOUR_SECRET
+   qmax run --cloud-url https://app.qualitymax.io --registration-secret YOUR_SECRET
    ```
 
 ### Building from Source
@@ -39,7 +39,7 @@ Requires Go 1.22+:
 
 ```bash
 cd local-agent/go
-go build -o qamax-agent .
+go build -o qmax .
 ```
 
 Cross-compile for all platforms:
@@ -51,79 +51,79 @@ make build-all
 
 ## Commands
 
-### `qamax-agent login`
+### `qmax login`
 
 Authenticate with QualityMax via browser OAuth.
 
 ```bash
-qamax-agent login                    # Uses default port 9876
-qamax-agent login --port 8080        # Custom callback port
-qamax-agent login --api-url URL      # Custom QualityMax URL
+qmax login                    # Uses default port 9876
+qmax login --port 8080        # Custom callback port
+qmax login --api-url URL      # Custom QualityMax URL
 ```
 
 Opens your browser to log in. The token is saved to `~/.qamax/config.json`.
 
-### `qamax-agent run`
+### `qmax run`
 
 Start the agent daemon to poll for and execute test assignments.
 
 ```bash
-qamax-agent run --cloud-url https://app.qualitymax.io
-qamax-agent run --cloud-url https://app.qualitymax.io --registration-secret SECRET
-qamax-agent run --poll-interval 10 --heartbeat-interval 30
+qmax run --cloud-url https://app.qualitymax.io
+qmax run --cloud-url https://app.qualitymax.io --registration-secret SECRET
+qmax run --poll-interval 10 --heartbeat-interval 30
 ```
 
 After the first successful registration, credentials are saved to config. Subsequent runs will use saved values as defaults.
 
 **Backward compatibility:** The old flag-based invocation still works:
 ```bash
-qamax-agent --cloud-url https://app.qualitymax.io --registration-secret SECRET
+qmax --cloud-url https://app.qualitymax.io --registration-secret SECRET
 ```
 
-### `qamax-agent capture`
+### `qmax capture`
 
 Launch Chrome, navigate to a URL, wait for manual login, then capture cookies and upload them as authentication data.
 
 ```bash
-qamax-agent capture https://example.com --project-id UUID --name "Production Auth"
-qamax-agent capture https://example.com --project-id UUID --name "Staging Auth" --output cookies.json
+qmax capture https://example.com --project-id UUID --name "Production Auth"
+qmax capture https://example.com --project-id UUID --name "Staging Auth" --output cookies.json
 ```
 
 Requires:
-- Prior `qamax-agent login` (uses OAuth token for API upload)
+- Prior `qmax login` (uses OAuth token for API upload)
 - Google Chrome installed
 
-### `qamax-agent projects`
+### `qmax projects`
 
 List available projects.
 
 ```bash
-qamax-agent projects
+qmax projects
 ```
 
-### `qamax-agent status`
+### `qmax status`
 
 Show current authentication and agent registration status.
 
 ```bash
-qamax-agent status
+qmax status
 ```
 
-### `qamax-agent token`
+### `qmax token`
 
 Print the saved OAuth token to stdout (useful for piping).
 
 ```bash
-qamax-agent token
-qamax-agent token | pbcopy    # Copy to clipboard on macOS
+qmax token
+qmax token | pbcopy    # Copy to clipboard on macOS
 ```
 
-### `qamax-agent logout`
+### `qmax logout`
 
 Remove saved credentials.
 
 ```bash
-qamax-agent logout
+qmax logout
 ```
 
 ## Configuration
@@ -159,7 +159,7 @@ Create `~/Library/LaunchAgents/com.qamax.agent.plist`:
     <string>com.qamax.agent</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/YOUR_USERNAME/.qamax-agent/qamax-agent</string>
+        <string>/Users/YOUR_USERNAME/.qmax/qmax</string>
         <string>run</string>
         <string>--cloud-url</string>
         <string>https://app.qualitymax.io</string>
@@ -169,9 +169,9 @@ Create `~/Library/LaunchAgents/com.qamax.agent.plist`:
     <key>KeepAlive</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>/Users/YOUR_USERNAME/.qamax-agent/logs/agent.log</string>
+    <string>/Users/YOUR_USERNAME/.qmax/logs/agent.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/YOUR_USERNAME/.qamax-agent/logs/agent.error.log</string>
+    <string>/Users/YOUR_USERNAME/.qmax/logs/agent.error.log</string>
 </dict>
 </plist>
 ```
@@ -183,7 +183,7 @@ launchctl load ~/Library/LaunchAgents/com.qamax.agent.plist
 
 ### Linux (systemd)
 
-Create `/etc/systemd/system/qamax-agent.service`:
+Create `/etc/systemd/system/qmax.service`:
 
 ```ini
 [Unit]
@@ -193,7 +193,7 @@ After=network.target
 [Service]
 Type=simple
 User=YOUR_USERNAME
-ExecStart=/home/YOUR_USERNAME/.qamax-agent/qamax-agent run --cloud-url https://app.qualitymax.io
+ExecStart=/home/YOUR_USERNAME/.qmax/qmax run --cloud-url https://app.qualitymax.io
 Restart=always
 RestartSec=10
 
@@ -203,8 +203,8 @@ WantedBy=multi-user.target
 
 Enable and start:
 ```bash
-sudo systemctl enable qamax-agent
-sudo systemctl start qamax-agent
+sudo systemctl enable qmax
+sudo systemctl start qmax
 ```
 
 ## Troubleshooting
@@ -220,17 +220,17 @@ sudo systemctl start qamax-agent
 
 - Ensure port 9876 is available (or use `--port` to specify another)
 - Check that the QualityMax app URL is correct
-- Try `qamax-agent login --api-url https://app.qualitymax.io`
+- Try `qmax login --api-url https://app.qualitymax.io`
 
 ### Capture fails
 
 - Ensure Google Chrome is installed
-- Ensure you are logged in (`qamax-agent login`)
-- Check that the project ID is valid (`qamax-agent projects`)
+- Ensure you are logged in (`qmax login`)
+- Check that the project ID is valid (`qmax projects`)
 
 ### No test assignments received
 
-- Verify agent is online in QualityMax dashboard (`qamax-agent status`)
+- Verify agent is online in QualityMax dashboard (`qmax status`)
 - Ensure tests are assigned to agents in the UI
 - Check polling interval (default: 5 seconds)
 

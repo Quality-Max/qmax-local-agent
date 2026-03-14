@@ -394,7 +394,7 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 
 	log.Printf("Executing test assignment %s (script %s)", assignmentID, scriptID)
 
-	testDir, err := os.MkdirTemp("", fmt.Sprintf("qamax-agent-%s-", assignmentID))
+	testDir, err := os.MkdirTemp("", fmt.Sprintf("qmax-%s-", assignmentID))
 	if err != nil {
 		a.reportResult(assignmentID, false, fmt.Sprintf("Failed to create temp dir: %v", err), nil)
 		return

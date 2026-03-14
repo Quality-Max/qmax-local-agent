@@ -34,11 +34,11 @@ case "$OS" in
         ;;
 esac
 
-BINARY_NAME="qamax-agent-${OS}-${ARCH}"
+BINARY_NAME="qmax-${OS}-${ARCH}"
 echo "Detected: ${OS}/${ARCH}"
 
 # Get installation directory
-INSTALL_DIR="${HOME}/.qamax-agent"
+INSTALL_DIR="${HOME}/.qmax"
 CONFIG_DIR="${HOME}/.qamax"
 echo "Installing to: $INSTALL_DIR"
 echo ""
@@ -61,16 +61,16 @@ fi
 # Download binary
 echo "Downloading $BINARY_NAME..."
 if command -v curl &> /dev/null; then
-    HTTP_CODE=$(curl -sL -w "%{http_code}" -o "$INSTALL_DIR/qamax-agent" "$DOWNLOAD_URL")
+    HTTP_CODE=$(curl -sL -w "%{http_code}" -o "$INSTALL_DIR/qmax" "$DOWNLOAD_URL")
     if [ "$HTTP_CODE" -ne 200 ]; then
-        rm -f "$INSTALL_DIR/qamax-agent"
+        rm -f "$INSTALL_DIR/qmax"
         echo "Error: Download failed (HTTP $HTTP_CODE)"
         echo "Check available releases at: https://github.com/$REPO/releases"
         exit 1
     fi
 elif command -v wget &> /dev/null; then
-    if ! wget -q -O "$INSTALL_DIR/qamax-agent" "$DOWNLOAD_URL"; then
-        rm -f "$INSTALL_DIR/qamax-agent"
+    if ! wget -q -O "$INSTALL_DIR/qmax" "$DOWNLOAD_URL"; then
+        rm -f "$INSTALL_DIR/qmax"
         echo "Error: Download failed"
         echo "Check available releases at: https://github.com/$REPO/releases"
         exit 1
@@ -80,26 +80,26 @@ else
     exit 1
 fi
 
-chmod +x "$INSTALL_DIR/qamax-agent"
-echo "Binary installed to: $INSTALL_DIR/qamax-agent"
+chmod +x "$INSTALL_DIR/qmax"
+echo "Binary installed to: $INSTALL_DIR/qmax"
 
 # Create symlink in /usr/local/bin (requires sudo)
 if [ -w /usr/local/bin ]; then
-    ln -sf "$INSTALL_DIR/qamax-agent" /usr/local/bin/qamax-agent
-    echo "Created symlink: /usr/local/bin/qamax-agent"
+    ln -sf "$INSTALL_DIR/qmax" /usr/local/bin/qmax
+    echo "Created symlink: /usr/local/bin/qmax"
 else
     echo ""
-    echo "To make 'qamax-agent' available globally, run:"
-    echo "   sudo ln -sf $INSTALL_DIR/qamax-agent /usr/local/bin/qamax-agent"
+    echo "To make 'qmax' available globally, run:"
+    echo "   sudo ln -sf $INSTALL_DIR/qmax /usr/local/bin/qmax"
 fi
 
 echo ""
 echo "Installation complete!"
 echo ""
 echo "Quick start:"
-echo "  qamax-agent login                          # Authenticate via browser"
-echo "  qamax-agent projects                       # List your projects"
-echo "  qamax-agent run --cloud-url https://app.qualitymax.io  # Start the agent daemon"
+echo "  qmax login                          # Authenticate via browser"
+echo "  qmax projects                       # List your projects"
+echo "  qmax run --cloud-url https://app.qualitymax.io  # Start the agent daemon"
 echo ""
-echo "Run 'qamax-agent help' for all commands."
+echo "Run 'qmax help' for all commands."
 echo ""

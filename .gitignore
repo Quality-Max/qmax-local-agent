@@ -1,5 +1,5 @@
-qamax-agent
-qamax-agent-*
+qmax
+qmax-*
 build/
 *.out
 cover.html

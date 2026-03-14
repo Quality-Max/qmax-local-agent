@@ -241,7 +241,7 @@ func TestCmdRunSubprocess_MissingURL(t *testing.T) {
 // TestMainSubprocess tests the main entry point
 func TestMainSubprocess_Version(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_version" {
-		os.Args = []string{"qamax-agent", "version"}
+		os.Args = []string{"qmax", "version"}
 		main()
 		return
 	}
@@ -260,7 +260,7 @@ func TestMainSubprocess_Version(t *testing.T) {
 
 func TestMainSubprocess_Help(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_help" {
-		os.Args = []string{"qamax-agent", "help"}
+		os.Args = []string{"qmax", "help"}
 		main()
 		return
 	}
@@ -273,14 +273,14 @@ func TestMainSubprocess_Help(t *testing.T) {
 		t.Fatalf("subprocess failed: %v\n%s", err, out)
 	}
 	output := string(out)
-	if !strings.Contains(output, "qamax-agent") {
-		t.Errorf("expected 'qamax-agent' in output, got: %s", output)
+	if !strings.Contains(output, "qmax") {
+		t.Errorf("expected 'qmax' in output, got: %s", output)
 	}
 }
 
 func TestMainSubprocess_NoArgs(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_noargs" {
-		os.Args = []string{"qamax-agent"}
+		os.Args = []string{"qmax"}
 		main()
 		return
 	}
@@ -297,7 +297,7 @@ func TestMainSubprocess_NoArgs(t *testing.T) {
 
 func TestMainSubprocess_UnknownCommand(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_unknown" {
-		os.Args = []string{"qamax-agent", "foobar"}
+		os.Args = []string{"qmax", "foobar"}
 		main()
 		return
 	}
@@ -316,7 +316,7 @@ func TestMainSubprocess_UnknownCommand(t *testing.T) {
 
 func TestMainSubprocess_BackwardCompatFlag(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_backcompat" {
-		os.Args = []string{"qamax-agent", "--cloud-url", "http://localhost:9999"}
+		os.Args = []string{"qmax", "--cloud-url", "http://localhost:9999"}
 		main()
 		return
 	}
@@ -337,7 +337,7 @@ func TestMainSubprocess_BackwardCompatFlag(t *testing.T) {
 
 func TestMainSubprocess_Logout(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_logout" {
-		os.Args = []string{"qamax-agent", "logout"}
+		os.Args = []string{"qmax", "logout"}
 		main()
 		return
 	}
@@ -357,7 +357,7 @@ func TestMainSubprocess_Logout(t *testing.T) {
 
 func TestMainSubprocess_Status(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_status" {
-		os.Args = []string{"qamax-agent", "status"}
+		os.Args = []string{"qmax", "status"}
 		main()
 		return
 	}
@@ -377,7 +377,7 @@ func TestMainSubprocess_Status(t *testing.T) {
 
 func TestMainSubprocess_Token(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_token" {
-		os.Args = []string{"qamax-agent", "token"}
+		os.Args = []string{"qmax", "token"}
 		main()
 		return
 	}
@@ -401,7 +401,7 @@ func TestMainSubprocess_Token(t *testing.T) {
 
 func TestMainSubprocess_Projects(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_projects" {
-		os.Args = []string{"qamax-agent", "projects"}
+		os.Args = []string{"qmax", "projects"}
 		main()
 		return
 	}
@@ -420,7 +420,7 @@ func TestMainSubprocess_Projects(t *testing.T) {
 
 func TestMainSubprocess_RunNoURL(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_run_nourl" {
-		os.Args = []string{"qamax-agent", "run"}
+		os.Args = []string{"qmax", "run"}
 		main()
 		return
 	}
@@ -438,7 +438,7 @@ func TestMainSubprocess_RunNoURL(t *testing.T) {
 
 func TestMainSubprocess_VersionFlag(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_vflag" {
-		os.Args = []string{"qamax-agent", "--version"}
+		os.Args = []string{"qmax", "--version"}
 		main()
 		return
 	}
@@ -457,7 +457,7 @@ func TestMainSubprocess_VersionFlag(t *testing.T) {
 
 func TestMainSubprocess_HelpFlag(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_hflag" {
-		os.Args = []string{"qamax-agent", "-h"}
+		os.Args = []string{"qmax", "-h"}
 		main()
 		return
 	}
@@ -469,14 +469,14 @@ func TestMainSubprocess_HelpFlag(t *testing.T) {
 	if err != nil {
 		t.Fatalf("subprocess failed: %v\n%s", err, out)
 	}
-	if !strings.Contains(string(out), "qamax-agent") {
+	if !strings.Contains(string(out), "qmax") {
 		t.Errorf("expected usage in output, got: %s", out)
 	}
 }
 
 func TestMainSubprocess_VShortFlag(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_vshort" {
-		os.Args = []string{"qamax-agent", "-v"}
+		os.Args = []string{"qmax", "-v"}
 		main()
 		return
 	}
@@ -588,7 +588,7 @@ func TestCmdCaptureSubprocess_URLViaFlag(t *testing.T) {
 
 func TestMainSubprocess_Capture(t *testing.T) {
 	if os.Getenv("RUN_CMD_TEST") == "main_capture" {
-		os.Args = []string{"qamax-agent", "capture"}
+		os.Args = []string{"qmax", "capture"}
 		main()
 		return
 	}

@@ -272,8 +272,8 @@ func TestPrintUsage(t *testing.T) {
 	n, _ := r.Read(buf)
 	output := string(buf[:n])
 
-	if !strings.Contains(output, "qamax-agent") {
-		t.Errorf("expected 'qamax-agent' in usage, got: %s", output)
+	if !strings.Contains(output, "qmax") {
+		t.Errorf("expected 'qmax' in usage, got: %s", output)
 	}
 	if !strings.Contains(output, "run") {
 		t.Errorf("expected 'run' command in usage")

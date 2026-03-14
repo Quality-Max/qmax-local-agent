@@ -32,10 +32,10 @@ func main() {
 	case "help", "--help", "-h":
 		printUsage()
 	case "version", "--version", "-v":
-		fmt.Printf("qamax-agent v%s\n", Version)
+		fmt.Printf("qmax v%s\n", Version)
 	default:
 		// Backward compat: if first arg starts with "-", treat as `run` with all args
-		// e.g. qamax-agent --cloud-url URL → qamax-agent run --cloud-url URL
+		// e.g. qmax --cloud-url URL → qmax run --cloud-url URL
 		if strings.HasPrefix(cmd, "-") {
 			cmdRun(os.Args[1:])
 		} else {
@@ -47,10 +47,10 @@ func main() {
 }
 
 func printUsage() {
-	fmt.Printf(`qamax-agent v%s — QualityMax Local Agent CLI
+	fmt.Printf(`qmax v%s — QualityMax Local Agent CLI
 
 Usage:
-  qamax-agent <command> [flags]
+  qmax <command> [flags]
 
 Commands:
   run        Start the agent daemon (poll for test assignments)
@@ -66,6 +66,6 @@ Flags:
   --version  Show version
 
 Backward compatibility:
-  qamax-agent --cloud-url URL   (equivalent to: qamax-agent run --cloud-url URL)
+  qmax --cloud-url URL   (equivalent to: qmax run --cloud-url URL)
 `, Version)
 }

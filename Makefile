@@ -1,4 +1,4 @@
-BINARY_NAME = qamax-agent
+BINARY_NAME = qmax
 VERSION = 3.0.0
 BUILD_DIR = build
 

@@ -35,7 +35,7 @@ func cmdRun(args []string) {
 	_ = fs.Parse(args)
 
 	if *cloudURL == "" {
-		fmt.Fprintln(os.Stderr, "Error: --cloud-url is required (set via flag or `qamax-agent login`)")
+		fmt.Fprintln(os.Stderr, "Error: --cloud-url is required (set via flag or `qmax login`)")
 		fs.Usage()
 		os.Exit(1)
 	}

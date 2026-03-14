@@ -1,4 +1,4 @@
-# qamax-agent
+# qmax
 
 Cross-platform CLI for running [QualityMax](https://qualitymax.io) Playwright tests locally.
 
@@ -18,7 +18,7 @@ Single binary, no runtime dependencies (Node.js/npm required only for test execu
 curl -fsSL https://raw.githubusercontent.com/Quality-Max/qamax-local-agent/main/install.sh | bash
 ```
 
-This detects your OS and architecture, downloads the correct binary from GitHub Releases, and installs it to `~/.qamax-agent/`.
+This detects your OS and architecture, downloads the correct binary from GitHub Releases, and installs it to `~/.qmax/`.
 
 To install a specific version:
 
@@ -32,16 +32,16 @@ Download the latest release for your platform from [Releases](https://github.com
 
 ```bash
 # macOS Apple Silicon
-curl -fsSL -o qamax-agent https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qamax-agent-darwin-arm64
+curl -fsSL -o qmax https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qmax-darwin-arm64
 
 # macOS Intel
-curl -fsSL -o qamax-agent https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qamax-agent-darwin-amd64
+curl -fsSL -o qmax https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qmax-darwin-amd64
 
 # Linux x86_64
-curl -fsSL -o qamax-agent https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qamax-agent-linux-amd64
+curl -fsSL -o qmax https://github.com/Quality-Max/qamax-local-agent/releases/latest/download/qmax-linux-amd64
 
-chmod +x qamax-agent
-sudo mv qamax-agent /usr/local/bin/
+chmod +x qmax
+sudo mv qmax /usr/local/bin/
 ```
 
 ### Build from source
@@ -63,9 +63,9 @@ make build-all
 ## Quick Start
 
 ```bash
-qamax-agent login                                              # Authenticate via browser
-qamax-agent projects                                           # List your projects
-qamax-agent run --cloud-url https://app.qualitymax.io          # Start the agent daemon
+qmax login                                              # Authenticate via browser
+qmax projects                                           # List your projects
+qmax run --cloud-url https://app.qualitymax.io          # Start the agent daemon
 ```
 
 ## Commands
@@ -75,9 +75,9 @@ qamax-agent run --cloud-url https://app.qualitymax.io          # Start the agent
 Authenticate with QualityMax via browser OAuth. Opens your browser and saves the token to `~/.qamax/config.json`.
 
 ```bash
-qamax-agent login                        # Default (port 9876)
-qamax-agent login --port 8080            # Custom callback port
-qamax-agent login --api-url URL          # Custom QualityMax URL
+qmax login                        # Default (port 9876)
+qmax login --port 8080            # Custom callback port
+qmax login --api-url URL          # Custom QualityMax URL
 ```
 
 ### `run`
@@ -85,9 +85,9 @@ qamax-agent login --api-url URL          # Custom QualityMax URL
 Start the agent daemon to poll for and execute test assignments and AI crawl discovery sessions.
 
 ```bash
-qamax-agent run --cloud-url https://app.qualitymax.io
-qamax-agent run --cloud-url https://app.qualitymax.io --registration-secret SECRET
-qamax-agent run --poll-interval 10 --heartbeat-interval 30
+qmax run --cloud-url https://app.qualitymax.io
+qmax run --cloud-url https://app.qualitymax.io --registration-secret SECRET
+qmax run --poll-interval 10 --heartbeat-interval 30
 ```
 
 After the first successful registration, credentials are saved. Subsequent runs use saved values as defaults.
@@ -95,7 +95,7 @@ After the first successful registration, credentials are saved. Subsequent runs 
 **Backward compatibility** — the old flag-based invocation still works:
 
 ```bash
-qamax-agent --cloud-url https://app.qualitymax.io --registration-secret SECRET
+qmax --cloud-url https://app.qualitymax.io --registration-secret SECRET
 ```
 
 #### AI Crawl Discovery (v3.0)
@@ -114,7 +114,7 @@ This enables AI-powered test generation for internal applications that the cloud
 Set `QAMAX_CRAWL_HEADED=true` to see the browser during crawl sessions (useful for debugging):
 
 ```bash
-QAMAX_CRAWL_HEADED=true qamax-agent run --cloud-url https://app.qualitymax.io
+QAMAX_CRAWL_HEADED=true qmax run --cloud-url https://app.qualitymax.io
 ```
 
 ### `capture`
@@ -122,18 +122,18 @@ QAMAX_CRAWL_HEADED=true qamax-agent run --cloud-url https://app.qualitymax.io
 Launch Chrome, navigate to a URL, wait for manual login, then capture all cookies and localStorage, and upload them as authentication data.
 
 ```bash
-qamax-agent capture --url https://example.com --project-id ID --name "Production Auth"
-qamax-agent capture --url https://example.com --project-id ID --name "Staging" --output cookies.json
+qmax capture --url https://example.com --project-id ID --name "Production Auth"
+qmax capture --url https://example.com --project-id ID --name "Staging" --output cookies.json
 ```
 
-Captures are stored as Playwright-compatible storage state JSON. Requires prior `qamax-agent login` and Google Chrome installed.
+Captures are stored as Playwright-compatible storage state JSON. Requires prior `qmax login` and Google Chrome installed.
 
 ### `projects`
 
 List available projects.
 
 ```bash
-qamax-agent projects
+qmax projects
 ```
 
 ### `status`
@@ -141,7 +141,7 @@ qamax-agent projects
 Show current authentication and agent registration status.
 
 ```bash
-qamax-agent status
+qmax status
 ```
 
 ### `token`
@@ -149,8 +149,8 @@ qamax-agent status
 Print the saved OAuth token to stdout (useful for piping).
 
 ```bash
-qamax-agent token
-qamax-agent token | pbcopy    # Copy to clipboard on macOS
+qmax token
+qmax token | pbcopy    # Copy to clipboard on macOS
 ```
 
 ### `logout`
@@ -158,7 +158,7 @@ qamax-agent token | pbcopy    # Copy to clipboard on macOS
 Remove saved credentials.
 
 ```bash
-qamax-agent logout
+qmax logout
 ```
 
 ## Configuration

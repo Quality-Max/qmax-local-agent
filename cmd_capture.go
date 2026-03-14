@@ -32,8 +32,8 @@ func cmdCapture(args []string) {
 	}
 	if targetURL == "" {
 		fmt.Fprintln(os.Stderr, "Error: URL argument is required")
-		fmt.Fprintln(os.Stderr, "Usage: qamax-agent capture --project-id ID --name NAME [--output FILE] <url>")
-		fmt.Fprintln(os.Stderr, "   or: qamax-agent capture --url URL --project-id ID --name NAME")
+		fmt.Fprintln(os.Stderr, "Usage: qmax capture --project-id ID --name NAME [--output FILE] <url>")
+		fmt.Fprintln(os.Stderr, "   or: qmax capture --url URL --project-id ID --name NAME")
 		os.Exit(1)
 	}
 	if *projectID == "" {
@@ -47,7 +47,7 @@ func cmdCapture(args []string) {
 
 	cfg, err := LoadConfig()
 	if err != nil || cfg.Token == "" {
-		fmt.Fprintln(os.Stderr, "Error: not logged in. Run `qamax-agent login` first.")
+		fmt.Fprintln(os.Stderr, "Error: not logged in. Run `qmax login` first.")
 		os.Exit(1)
 	}
 
