@@ -22,7 +22,7 @@ func cmdLogin(args []string) {
 	fs := flag.NewFlagSet("login", flag.ExitOnError)
 	port := fs.Int("port", defaultCallbackPort, "Local callback server port")
 	apiURL := fs.String("api-url", defaultAPIURL, "QualityMax app URL")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	tokenCh := make(chan string, 1)
 	errCh := make(chan error, 1)
@@ -90,7 +90,7 @@ func cmdLogin(args []string) {
 
 	select {
 	case token := <-tokenCh:
-		server.Shutdown(context.Background())
+		_ = server.Shutdown(context.Background())
 
 		cfg, err := LoadConfig()
 		if err != nil {
@@ -113,7 +113,7 @@ func cmdLogin(args []string) {
 		os.Exit(1)
 
 	case <-ctx.Done():
-		server.Shutdown(context.Background())
+		_ = server.Shutdown(context.Background())
 		fmt.Fprintf(os.Stderr, "Error: login timed out after %s\n", loginTimeout)
 		os.Exit(1)
 	}
@@ -131,5 +131,5 @@ func openBrowser(url string) {
 	default:
 		return
 	}
-	cmd.Start()
+	_ = cmd.Start()
 }

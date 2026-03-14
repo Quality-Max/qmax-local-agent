@@ -8,7 +8,7 @@ import (
 
 func cmdStatus(args []string) {
 	fs := flag.NewFlagSet("status", flag.ExitOnError)
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	cfg, err := LoadConfig()
 	if err != nil {
