@@ -43,7 +43,7 @@ func cmdPRCreate(args []string) {
 	repoID := fs.Int("repo-id", 0, "Repository ID (required)")
 	projectID := fs.Int("project-id", 0, "Project ID (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *repoID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --repo-id is required")

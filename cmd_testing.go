@@ -69,7 +69,7 @@ func cmdTestCases(args []string) {
 	category := fs.String("category", "", "Filter by category")
 	status := fs.String("status", "", "Filter by status")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *projectID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --project-id is required")
@@ -146,7 +146,7 @@ func cmdTestScripts(args []string) {
 	projectID := fs.Int("project-id", 0, "Project ID (required)")
 	limit := fs.Int("limit", 50, "Max results to return")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *projectID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --project-id is required")
@@ -207,7 +207,7 @@ func cmdTestRun(args []string) {
 	browser := fs.String("browser", "chromium", "Browser: chromium, firefox, webkit")
 	wait := fs.Bool("wait", false, "Wait for execution to complete and show result")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *scriptID == 0 && *scriptIDs == "" {
 		fmt.Fprintln(os.Stderr, "Error: --script-id or --script-ids is required")
@@ -302,7 +302,7 @@ func cmdTestGenerate(args []string) {
 	testCaseID := fs.Int("test-case-id", 0, "Test case ID to generate code for (required)")
 	force := fs.Bool("force", false, "Regenerate even if code already exists")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *testCaseID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --test-case-id is required")
@@ -351,7 +351,7 @@ func cmdTestStatus(args []string) {
 	fs := flag.NewFlagSet("test status", flag.ExitOnError)
 	executionID := fs.String("execution-id", "", "Execution ID to check (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *executionID == "" {
 		fmt.Fprintln(os.Stderr, "Error: --execution-id is required")

@@ -56,7 +56,7 @@ func cmdRepoList(args []string) {
 	fs := flag.NewFlagSet("repo list", flag.ExitOnError)
 	projectID := fs.Int("project-id", 0, "Project ID (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *projectID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --project-id is required")
@@ -108,7 +108,7 @@ func cmdRepoReview(args []string) {
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
 	maxSuggestions := fs.Int("max-suggestions", 8, "Max review suggestions")
 	scope := fs.String("scope", "all", "Suggestions scope: all, critical, security")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *repoID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --repo-id is required")
@@ -156,7 +156,7 @@ func cmdRepoCoverage(args []string) {
 	fs := flag.NewFlagSet("repo coverage", flag.ExitOnError)
 	repoID := fs.Int("repo-id", 0, "Repository ID (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *repoID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --repo-id is required")
@@ -199,7 +199,7 @@ func cmdRepoQuality(args []string) {
 	fs := flag.NewFlagSet("repo quality", flag.ExitOnError)
 	repoID := fs.Int("repo-id", 0, "Repository ID (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *repoID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --repo-id is required")

@@ -55,7 +55,7 @@ func cmdImportRepo(args []string) {
 	consent := fs.String("consent", "opt_out", "Training consent: opt_in or opt_out")
 	baseURL := fs.String("base-url", "", "Base URL for testing (saved as project main_url)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *repoURL == "" {
 		fmt.Fprintln(os.Stderr, "Error: --url is required")
@@ -153,7 +153,7 @@ func cmdImportDoc(args []string) {
 	file := fs.String("file", "", "File path to read text from")
 	sourceName := fs.String("source", "", "Name for the import source")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *projectID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --project-id is required")

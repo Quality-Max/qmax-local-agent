@@ -358,6 +358,7 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 	testCode := assignment.Code
 	browser := assignment.Browser
 	if browser == "" {
+		browser = "chromium"
 	}
 	headless := assignment.Headless
 	vpWidth := assignment.ViewportWidth
