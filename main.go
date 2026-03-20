@@ -29,6 +29,18 @@ func main() {
 		cmdToken(os.Args[2:])
 	case "logout":
 		cmdLogout(os.Args[2:])
+	case "test":
+		cmdTest(os.Args[2:])
+	case "crawl":
+		cmdCrawl(os.Args[2:])
+	case "repo":
+		cmdRepo(os.Args[2:])
+	case "import":
+		cmdImport(os.Args[2:])
+	case "pr":
+		cmdPR(os.Args[2:])
+	case "sast":
+		cmdSast(os.Args[2:])
 	case "help", "--help", "-h":
 		printUsage()
 	case "version", "--version", "-v":
@@ -57,9 +69,15 @@ Commands:
   login      Authenticate with QualityMax via browser OAuth
   capture    Launch Chrome, capture cookies, upload as auth data
   projects   List available projects
+  test       Test operations (cases, scripts, run, generate, status)
+  crawl      AI-powered crawl (start, status, results, jobs)
+  repo       Repository operations (list, review, coverage, quality)
+  import     Import repositories or documents for test generation
+  pr         Create pull requests with generated tests
   status     Show current auth and agent status
   token      Print the saved OAuth token to stdout
   logout     Remove saved credentials
+  sast       SAST security scanning (verify, install, scan, setup)
 
 Flags:
   --help     Show this help message
