@@ -1,0 +1,20 @@
+#!/bin/bash
+# Pre-commit hook: build, lint, vet
+# Install: make setup-hooks
+
+set -e
+
+echo "=== pre-commit: build ==="
+go build ./...
+
+echo "=== pre-commit: vet ==="
+go vet ./...
+
+echo "=== pre-commit: lint ==="
+if command -v golangci-lint &> /dev/null; then
+    golangci-lint run
+else
+    echo "WARN: golangci-lint not installed, skipping (install: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest)"
+fi
+
+echo "=== pre-commit: all checks passed ==="

@@ -22,7 +22,7 @@ import (
 )
 
 const (
-	Version   = "3.0.0"
+	Version   = "4.0.0"
 	AgentName = "QualityMax Local Agent"
 )
 
@@ -307,12 +307,12 @@ func (a *Agent) SendHeartbeat() error {
 
 // Assignment represents a test assignment from the server.
 type Assignment struct {
-	ID             interface{} `json:"id"`
-	ScriptID       interface{} `json:"script_id"`
+	ID             json.Number `json:"id"`
+	ScriptID       json.Number `json:"script_id"`
 	Code           string      `json:"code"`
 	Framework      string      `json:"framework"`
 	CustomURL      string      `json:"custom_url"`
-	ExecutionID    interface{} `json:"execution_id"`
+	ExecutionID    json.Number `json:"execution_id"`
 	Headless       bool        `json:"headless"`
 	Browser        string      `json:"browser"`
 	ViewportWidth  int         `json:"viewport_width"`
@@ -349,16 +349,19 @@ func (a *Agent) PollAssignments() ([]Assignment, error) {
 
 // ExecuteTest runs a single test assignment.
 func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
-	assignmentID := fmt.Sprintf("%v", assignment.ID)
-
-	// Always clean up active test tracking, even on early returns
+	assignmentID := assignment.ID.String()
+	scriptID := assignment.ScriptID.String()
+	if assignmentID == "" {
+		log.Printf("ERROR: Assignment has empty ID, skipping")
+		return
+	}
+	// Clean up active test tracking on all exit paths
 	defer func() {
 		a.activeTests.Delete(assignmentID)
 		a.mu.Lock()
 		a.activeCount--
 		a.mu.Unlock()
 	}()
-	scriptID := fmt.Sprintf("%v", assignment.ScriptID)
 	testCode := assignment.Code
 	browser := assignment.Browser
 	if browser == "" {
@@ -432,6 +435,7 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 	}
 	mapping, ok := browserMap[browser]
 	if !ok {
+		log.Printf("WARN: Unknown browser %q, falling back to chromium", browser)
 		mapping = browserMap["chromium"]
 	}
 	playwrightBrowser := mapping[0]
@@ -492,14 +496,9 @@ module.exports = defineConfig({
 	log.Printf("Running test for assignment %s with browser project: %s", assignmentID, playwrightBrowser)
 
 	var stdout, stderr bytes.Buffer
-	cmd := exec.CommandContext(ctx, "npx", "playwright", "test", "--project", playwrightBrowser)
-	cmd.Dir = testDir
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
 	testCtx, testCancel := context.WithTimeout(ctx, 600*time.Second)
 	defer testCancel()
-	cmd = exec.CommandContext(testCtx, "npx", "playwright", "test", "--project", playwrightBrowser)
+	cmd := exec.CommandContext(testCtx, "npx", "playwright", "test", "--project", playwrightBrowser)
 	cmd.Dir = testDir
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
@@ -699,7 +698,9 @@ func (a *Agent) Run(ctx context.Context) error {
 		return fmt.Errorf("failed to register agent: %w", err)
 	}
 
+	a.mu.Lock()
 	a.running = true
+	a.mu.Unlock()
 
 	go a.heartbeatLoop(ctx)
 
@@ -710,7 +711,9 @@ func (a *Agent) Run(ctx context.Context) error {
 		select {
 		case <-ctx.Done():
 			log.Println("Shutting down agent...")
+			a.mu.Lock()
 			a.running = false
+			a.mu.Unlock()
 			a.waitForActiveTests()
 			return nil
 		case <-ticker.C:
@@ -725,7 +728,7 @@ func (a *Agent) Run(ctx context.Context) error {
 			}
 
 			for _, assignment := range assignments {
-				id := fmt.Sprintf("%v", assignment.ID)
+				id := assignment.ID.String()
 				if _, exists := a.activeTests.Load(id); exists {
 					continue
 				}
@@ -791,7 +794,10 @@ func (a *Agent) heartbeatLoop(ctx context.Context) {
 		case <-time.After(wait):
 		}
 
-		if !a.running {
+		a.mu.Lock()
+		running := a.running
+		a.mu.Unlock()
+		if !running {
 			return
 		}
 

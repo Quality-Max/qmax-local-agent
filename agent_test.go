@@ -458,8 +458,8 @@ func TestPollAssignments_Success(t *testing.T) {
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"assignments": []map[string]interface{}{
 				{
-					"id":        "assign-1",
-					"script_id": "script-1",
+					"id":        1,
+					"script_id": 101,
 					"code":      "test code",
 					"framework": "playwright",
 					"headless":  true,
@@ -1126,7 +1126,7 @@ func TestExecuteTest_ScriptIDNil(t *testing.T) {
 	a := newTestAgent(server.URL)
 	assignment := Assignment{
 		ID:       "test-nil-script",
-		ScriptID: nil, // This will format as "<nil>"
+		ScriptID: "", // Empty json.Number — tests empty ID handling
 		Code:     "",
 	}
 
@@ -1242,12 +1242,12 @@ func TestRun_CrawlPollError(t *testing.T) {
 
 func TestAssignmentParsing(t *testing.T) {
 	raw := `{
-		"id": "assign-1",
-		"script_id": "script-1",
+		"id": 1,
+		"script_id": 101,
 		"code": "test('hello', () => {});",
 		"framework": "playwright",
 		"custom_url": "https://example.com",
-		"execution_id": "exec-1",
+		"execution_id": 999,
 		"headless": true,
 		"browser": "firefox",
 		"viewport_width": 1920,
@@ -1280,7 +1280,7 @@ func TestAssignmentParsing(t *testing.T) {
 }
 
 func TestAssignmentDefaults(t *testing.T) {
-	raw := `{"id": "assign-2"}`
+	raw := `{"id": 2}`
 	var a Assignment
 	_ = json.Unmarshal([]byte(raw), &a)
 
