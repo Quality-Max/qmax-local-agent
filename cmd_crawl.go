@@ -62,7 +62,7 @@ func cmdCrawlStart(args []string) {
 	instructions := fs.String("instructions", "", "Custom AI instructions for the crawl")
 	wait := fs.Bool("wait", false, "Wait for crawl to complete")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *projectID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --project-id is required")
@@ -127,7 +127,7 @@ func cmdCrawlStatus(args []string) {
 	fs := flag.NewFlagSet("crawl status", flag.ExitOnError)
 	crawlID := fs.String("crawl-id", "", "Crawl job ID (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *crawlID == "" {
 		fmt.Fprintln(os.Stderr, "Error: --crawl-id is required")
@@ -176,7 +176,7 @@ func cmdCrawlResults(args []string) {
 	fs := flag.NewFlagSet("crawl results", flag.ExitOnError)
 	crawlID := fs.String("crawl-id", "", "Crawl job ID (required)")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *crawlID == "" {
 		fmt.Fprintln(os.Stderr, "Error: --crawl-id is required")
@@ -259,7 +259,7 @@ func cmdCrawlJobs(args []string) {
 	fs := flag.NewFlagSet("crawl jobs", flag.ExitOnError)
 	limit := fs.Int("limit", 20, "Max jobs to return")
 	jsonOut := fs.Bool("json", false, "Output raw JSON")
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	cfg := mustLoadConfig()
 	apiURL := cfg.GetAPIBaseURL()

@@ -358,7 +358,6 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 	testCode := assignment.Code
 	browser := assignment.Browser
 	if browser == "" {
-		browser = "chromium"
 	}
 	headless := assignment.Headless
 	vpWidth := assignment.ViewportWidth
@@ -435,7 +434,6 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 	mapping, ok := browserMap[browser]
 	if !ok {
 		log.Printf("WARN: Unknown browser %q, falling back to chromium", browser)
-		browser = "chromium"
 		mapping = browserMap["chromium"]
 	}
 	playwrightBrowser := mapping[0]
@@ -580,7 +578,7 @@ func (a *Agent) collectArtifacts(testDir string) map[string]interface{} {
 
 	var screenshots []map[string]string
 
-	filepath.Walk(testResults, func(path string, info os.FileInfo, err error) error {
+	_ = filepath.Walk(testResults, func(path string, info os.FileInfo, err error) error {
 		if err != nil || info.IsDir() {
 			return nil
 		}

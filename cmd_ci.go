@@ -95,7 +95,7 @@ func cmdCIRun(args []string) {
 	timeout := fs.Int("timeout", defaultCITimeout, "Overall timeout in seconds")
 	format := fs.String("format", "markdown", "Output format: markdown or json")
 
-	fs.Parse(args)
+	_ = fs.Parse(args)
 
 	if *projectID == 0 {
 		fmt.Fprintln(os.Stderr, "Error: --project-id is required")
@@ -441,7 +441,7 @@ func ciOutputMarkdown(results []ciTestResult, projectID int, totalDuration float
 		statusIcon = "\u274c"
 	}
 
-	sb.WriteString(fmt.Sprintf("## \U0001f9ea QualityMax Test Results\n\n"))
+	sb.WriteString("## \U0001f9ea QualityMax Test Results\n\n")
 	sb.WriteString(fmt.Sprintf("**Project:** #%d | **Status:** %s %s | **Duration:** %.1fs\n\n",
 		projectID, statusIcon, overallStatus, totalDuration))
 
@@ -462,7 +462,7 @@ func ciOutputMarkdown(results []ciTestResult, projectID int, totalDuration float
 
 	// Failed test details
 	if failed > 0 {
-		sb.WriteString(fmt.Sprintf("\n### \u274c Failed Tests\n\n"))
+		sb.WriteString("\n### \u274c Failed Tests\n\n")
 		for _, r := range results {
 			if r.Status == "passed" {
 				continue
