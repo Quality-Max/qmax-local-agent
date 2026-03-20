@@ -1126,7 +1126,7 @@ func TestExecuteTest_ScriptIDNil(t *testing.T) {
 	a := newTestAgent(server.URL)
 	assignment := Assignment{
 		ID:       "test-nil-script",
-		ScriptID: nil, // This will format as "<nil>"
+		ScriptID: "", // Empty json.Number — tests empty ID handling
 		Code:     "",
 	}
 
