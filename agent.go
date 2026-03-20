@@ -355,6 +355,13 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 		log.Printf("ERROR: Assignment has empty ID, skipping")
 		return
 	}
+	// Clean up active test tracking on all exit paths
+	defer func() {
+		a.activeTests.Delete(assignmentID)
+		a.mu.Lock()
+		a.activeCount--
+		a.mu.Unlock()
+	}()
 	testCode := assignment.Code
 	browser := assignment.Browser
 	if browser == "" {
@@ -396,12 +403,6 @@ func (a *Agent) ExecuteTest(ctx context.Context, assignment Assignment) {
 		return
 	}
 	defer os.RemoveAll(testDir)
-	defer func() {
-		a.activeTests.Delete(assignmentID)
-		a.mu.Lock()
-		a.activeCount--
-		a.mu.Unlock()
-	}()
 
 	a.updateAssignmentStatus(assignmentID, "started")
 
