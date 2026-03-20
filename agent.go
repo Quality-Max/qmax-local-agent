@@ -698,7 +698,9 @@ func (a *Agent) Run(ctx context.Context) error {
 		return fmt.Errorf("failed to register agent: %w", err)
 	}
 
+	a.mu.Lock()
 	a.running = true
+	a.mu.Unlock()
 
 	go a.heartbeatLoop(ctx)
 
@@ -709,7 +711,9 @@ func (a *Agent) Run(ctx context.Context) error {
 		select {
 		case <-ctx.Done():
 			log.Println("Shutting down agent...")
+			a.mu.Lock()
 			a.running = false
+			a.mu.Unlock()
 			a.waitForActiveTests()
 			return nil
 		case <-ticker.C:
@@ -790,7 +794,10 @@ func (a *Agent) heartbeatLoop(ctx context.Context) {
 		case <-time.After(wait):
 		}
 
-		if !a.running {
+		a.mu.Lock()
+		running := a.running
+		a.mu.Unlock()
+		if !running {
 			return
 		}
 
