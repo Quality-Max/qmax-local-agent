@@ -1,5 +1,9 @@
 # qmax
 
+[CLI quickstart](https://docs.qualitymax.io/quickstart-cli/) · [Documentation](https://docs.qualitymax.io/)
+
+This is the `qmax` CLI and local execution agent. For the separate QA-focused AI terminal agent, see [qmax-code](https://github.com/Quality-Max/qmax-code).
+
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support-yellow?logo=buymeacoffee)](https://buymeacoffee.com/qualitymax)
 
 Cross-platform CLI for running [QualityMax](https://qualitymax.io) Playwright tests locally.
